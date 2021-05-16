@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tank Game</title>
+    <style>
+        button{width:50px;}
+    </style>
+</head>
+<body>
+    <div style="height:300px;width: 300px;background-color:rgb(250, 249, 249); border: 1px solid black">
+        <img src="tank.png"  id="tank" style="position:relative;top:0px;left:0px;" height="30px" width="30px"/>
+        <img src="boom.png" id="boom" style="position:relative;" width="30px" />
+    </div>
+    <table>
+        <tr>
+            <td></td>
+            <td><button type="button" onclick="len()">lên</button></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><button type="button" onclick="trai()">trái</button></td>
+            <td></td>
+            <td><button type="button" onclick="phai()">phải</button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button type="button" onclick="xuong()">xuống</button></td>
+            <td></td>
+        </tr>
+    </table>
+    <script>
+        
+        let tank = document.getElementById("tank");
+        let y=0,x=0;
+        let boom = document.getElementById("boom");
+        let explosion = document.getElementById("explosion");
+        boom.style.top = Math.floor(Math.random()*270) + "px";//random vị trí boom
+        boom.style.left = Math.floor(Math.random()*270) + "px";
+        function checkboom() {// lấy vị trí của tank and boom mỗi lần click
+            let tanktop = tank.style.top;
+            let tanktop2 = tanktop.substring(0, tanktop.length-2);
+            let tankleft = boom.style.left;
+            let tankleft2 = tankleft.substring(0, tankleft.length-2);
+            let boomtop = boom.style.top;
+            let boomtop2 = boomtop.substring(0,boomtop.length-2);
+            let boomleft = boom.style.left;
+            let boomleft2 = boomleft.substring(0, boomleft.length-2);
+            if((boomtop2-tanktop2<=10&&boomtop2- tanktop2>=-10)&&(boomleft2-tankleft2<=10&&boomleft2- tankleft2>=-10)){
+                tank.src="explosion.png";//change tank image to explosion image
+                alert("you die! refresh web to play again!");
+                
+            }//check nếu tank gần boom trong khoảng <=10px thì nổ
+        }
+        function xuong() {
+            if(y<270){
+            y+=10;
+            tank.style["top"]=y+"px";}//khoảng cách đi trong 1 lần click
+            tank.style.transform=("rotate("+180+"deg)");//thay đổi hướng tank
+            checkboom();
+        }
+        function len(){
+            y-=10;
+            tank.style["top"]=y+"px";
+            tank.style.transform=("rotate("+0+"deg)");
+            checkboom();
+        }
+        function trai(){
+            x-=10;
+            tank.style["left"]=x+"px";
+            tank.style.transform=("rotate("+-90+"deg)");
+            checkboom();
+        }
+        function phai(){
+            if(x<270){
+            x+=10;
+            tank.style["left"]=x+"px";
+            tank.style.transform=("rotate("+90+"deg)");}
+            checkboom();
+        }
+        
+    </script>
+</body>
+</html>
